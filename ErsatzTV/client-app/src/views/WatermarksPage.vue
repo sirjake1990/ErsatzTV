@@ -1,14 +1,23 @@
 ﻿<template>
     <div>
         <v-btn color="success" class="ma-4" @click="addRecord()"
-            >Add FFmpeg Profile</v-btn
+            >Add Watermark</v-btn
         >
         <v-data-table
             :headers="headers"
-            :items="ffmpegProfiles"
+            :items="watermarks"
             :sort-by="['name']"
             class="elevation-1"
         >
+            <template v-slot:[`item.image`]="{ item }">
+                <div class="p-2">
+                    <v-img
+                        :src="item.image"
+                        :alt="item.name"
+                        height="100px"
+                    ></v-img>
+                </div>
+            </template>
             <template v-slot:[`item.actions`]="{ item }">
                 <v-icon small class="mr-2" @click="editRow(item.id)">
                     mdi-lead-pencil
@@ -23,31 +32,31 @@
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
-import { FFmpegProfile } from '@/models/FFmpegProfile';
-import { ffmpegProfileApiService } from '@/services/FFmpegProfileService';
+import { Watermark } from '@/models/Watermark';
+import { watermarkApiService } from '@/services/WatermarkService';
 
 @Component
-export default class WatermarkProfiles extends Vue {
-    private ffmpegProfiles: FFmpegProfile[] = [];
+export default class Watermarks extends Vue {
+    private watermarks: Watermark[] = [];
 
     private dialog = false;
 
     get headers() {
         return [
-            { text: this.$t('ffmpeg-profiles.table.name'), value: 'name' },
+            { text: this.$t('watermarks.table.name'), value: 'name' },
             {
-                text: this.$t('ffmpeg-profiles.table.resolution'),
-                value: 'resolution'
+                text: this.$t('watermarks.table.image'),
+                value: 'image'
             },
-            { text: this.$t('ffmpeg-profiles.table.video'), value: 'video' },
-            { text: this.$t('ffmpeg-profiles.table.audio'), value: 'audio' },
+            { text: this.$t('watermarks.table.mode'), value: 'mode' },
+            { text: this.$t('watermarks.table.location'), value: 'location' },
             { text: 'Actions', value: 'actions', sortable: false }
         ];
     }
 
     addRecord() {
         this.$router.push({
-            name: 'add-ffmpeg-profile'
+            name: 'add-watermark'
         });
     }
 
@@ -55,7 +64,7 @@ export default class WatermarkProfiles extends Vue {
         this.$swal
             .fire({
                 title: 'Are you sure?',
-                text: 'Delete "' + recordName + '" FFmpeg Profile?',
+                text: 'Delete "' + recordName + '" Watermark?',
                 icon: 'warning',
                 iconColor: '#4CAF50',
                 showCancelButton: true,
@@ -63,18 +72,18 @@ export default class WatermarkProfiles extends Vue {
             })
             .then((result) => {
                 if (result.isConfirmed) {
-                    let index = this.ffmpegProfiles.findIndex(
+                    let index = this.watermarks.findIndex(
                         (it) => it.id === record
                     );
-                    this.ffmpegProfiles.splice(index, 1);
-                    ffmpegProfileApiService.deleteRecord(String(record));
+                    this.watermarks.splice(index, 1);
+                    //watermarkApiService.deleteRecord(String(record));
                     this.$swal.fire({
-                        html: '"' + recordName + '" FFmpeg Profile deleted.',
+                        html: '"' + recordName + '" Watermark deleted.',
                         timer: 2200
                     });
                     this.$swal.fire(
                         'Deleted!',
-                        '"' + recordName + '" FFmpeg Profile deleted.',
+                        '"' + recordName + '" Watermark deleted.',
                         'success'
                     );
                 }
@@ -83,15 +92,15 @@ export default class WatermarkProfiles extends Vue {
 
     editRow(id: any) {
         this.$router.push({
-            name: 'edit-ffmpeg',
+            name: 'edit-watermark',
             query: { id: id }
         });
     }
 
-    title: string = 'FFMpeg Profiles';
+    title: string = 'Watermarks';
 
     async mounted(): Promise<void> {
-        this.ffmpegProfiles = await ffmpegProfileApiService.getAll();
+        this.watermarks = await watermarkApiService.getAll();
     }
 }
 </script>

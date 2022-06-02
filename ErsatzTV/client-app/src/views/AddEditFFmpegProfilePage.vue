@@ -520,8 +520,6 @@ import { ffmpegProfileApiService } from '@/services/FFmpegProfileService';
 
 @Component
 export default class AddEditFFmpegProfile extends Vue {
-    //@Name({ default: 'AddEditFFmpegProfile' }) AddEditFFmpegProfile!: string;
-    //@Prop({ default: -1 }) private id!: number;
     private newProfile: any = {};
     private refForm: any = this.$refs.form;
     private isFormValid = false;
@@ -540,10 +538,6 @@ export default class AddEditFFmpegProfile extends Vue {
     private audioChannelsShow = false;
     private audioSampleRateShow = false;
     private normalizeLoudnessShow = false;
-
-    public AddEditFFmpegProfile() {
-        console.log('test');
-    }
 
     private audioFormats: [
         { id: number; name: string },

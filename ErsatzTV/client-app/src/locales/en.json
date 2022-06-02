@@ -1,4 +1,4 @@
-{
+﻿{
   "$vuetify": {
     "badge": "Badge",
     "close": "Close",
@@ -95,7 +95,13 @@
     }
   },
   "watermarks": {
-    "title": "Watermarks"
+    "title": "Watermarks",
+    "table": {
+      "name": "Name",
+      "image": "Image",
+      "mode": "Mode",
+      "location": "Location"
+    }
   },
   "media-sources": {
     "title": "Media Sources",

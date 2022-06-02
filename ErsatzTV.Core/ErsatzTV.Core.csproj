@@ -41,5 +41,9 @@
         <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       </Compile>
     </ItemGroup>
+    
+    <ItemGroup>
+      <Folder Include="Api\Watermarks\" />
+    </ItemGroup>
 
 </Project>

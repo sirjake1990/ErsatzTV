@@ -3,7 +3,9 @@ import VueRouter from 'vue-router';
 import HomePage from '../views/HomePage.vue';
 import ChannelsPage from '../views/ChannelsPage.vue';
 import FFmpegProfilesPage from '../views/FFmpegProfilesPage.vue';
+import WatermarksPage from '../views/WatermarksPage.vue';
 import AddEditFFmpegProfilePage from '../views/AddEditFFmpegProfilePage.vue';
+import AddEditWatermarkPage from '../views/AddEditWatermarkPage';
 
 Vue.use(VueRouter);
 
@@ -39,9 +41,10 @@ const routes = [
     {
         path: '/watermarks',
         name: 'watermarks.title',
+        component: WatermarksPage,
         meta: {
             icon: 'mdi-watermark',
-            disabled: true
+            disabled: false
         }
     },
     {
@@ -235,6 +238,25 @@ const routes = [
         path: '/edit-ffmpeg-profile',
         name: 'edit-ffmpeg',
         component: AddEditFFmpegProfilePage,
+        meta: {
+            disabled: false,
+            hidden: true
+        },
+        props: (route) => ({ query: route.query.id })
+    },
+    {
+        path: '/add-watermark',
+        name: 'add-watermark',
+        component: AddEditWatermarkPage,
+        meta: {
+            disabled: false,
+            hidden: true
+        }
+    },
+    {
+        path: '/edit-watermark',
+        name: 'edit-watermark',
+        component: AddEditWatermarkPage,
         meta: {
             disabled: false,
             hidden: true
