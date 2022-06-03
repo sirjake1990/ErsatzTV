@@ -1,9 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 using ErsatzTV.Application.FFmpegProfiles;
 using ErsatzTV.Core;
 using ErsatzTV.Core.Api.FFmpegProfiles;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
 
 namespace ErsatzTV.Controllers.Api;
 

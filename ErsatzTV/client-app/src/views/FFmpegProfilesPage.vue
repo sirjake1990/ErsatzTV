@@ -1,4 +1,4 @@
-﻿<template>
+<template>
     <div>
         <v-btn color="success" class="ma-4" @click="addRecord()">{{
             $t('ffmpeg-profiles.add-profile')
@@ -30,6 +30,8 @@ import { ffmpegProfileApiService } from '@/services/FFmpegProfileService';
 @Component
 export default class FFmpegProfiles extends Vue {
     public ffmpegProfiles: FFmpegProfile[] = [];
+
+    private dialog = false;
 
     get headers() {
         return [

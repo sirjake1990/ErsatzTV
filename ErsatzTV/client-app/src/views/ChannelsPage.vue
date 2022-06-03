@@ -1,5 +1,6 @@
 ﻿<template>
     <div>
+        <v-btn color="success" class="ma-4">Add Channel</v-btn>
         <v-data-table
             :headers="headers"
             :items="channels"
