@@ -18,6 +18,20 @@ public class PlexMediaContainerMetadataContent<T>
 }
 
 [XmlRoot("MediaContainer", Namespace = null)]
+public class PlexXmlMediaContainerStatsResponse
+{
+    [XmlAttribute("totalSize")]
+    public int TotalSize { get; set; }
+}
+
+[XmlRoot("MediaContainer", Namespace = null)]
+public class PlexXmlMediaContainerPingResponse
+{
+    [XmlAttribute("machineIdentifier")]
+    public string MachineIdentifier { get; set; }
+}
+
+[XmlRoot("MediaContainer", Namespace = null)]
 public class PlexXmlVideoMetadataResponseContainer
 {
     [XmlElement("Video")]

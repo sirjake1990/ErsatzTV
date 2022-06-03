@@ -1,8 +1,8 @@
-﻿<template>
+<template>
     <div>
-        <v-btn color="success" class="ma-4" @click="addRecord()"
-            >Add FFmpeg Profile</v-btn
-        >
+        <v-btn color="success" class="ma-4" @click="addRecord()">{{
+            $t('ffmpeg-profiles.add-profile')
+        }}</v-btn>
         <v-data-table
             :headers="headers"
             :items="ffmpegProfiles"
@@ -10,11 +10,12 @@
             class="elevation-1"
         >
             <template v-slot:[`item.actions`]="{ item }">
-                <v-icon small class="mr-2" @click="editRow(item.id)">
-                    mdi-lead-pencil
-                </v-icon>
-                <v-icon small @click.stop="deleteRecord(item.id, item.name)"
-                    >mdi-delete</v-icon
+                <v-btn icon class="mr-2" @click="editRow(item.id)">
+                    <v-icon>mdi-lead-pencil</v-icon>
+                </v-btn>
+
+                <v-btn icon @click.stop="deleteRecord(item.id, item.name)">
+                    <v-icon>mdi-delete</v-icon></v-btn
                 >
             </template>
         </v-data-table>
@@ -28,7 +29,7 @@ import { ffmpegProfileApiService } from '@/services/FFmpegProfileService';
 
 @Component
 export default class FFmpegProfiles extends Vue {
-    private ffmpegProfiles: FFmpegProfile[] = [];
+    public ffmpegProfiles: FFmpegProfile[] = [];
 
     private dialog = false;
 
@@ -41,7 +42,11 @@ export default class FFmpegProfiles extends Vue {
             },
             { text: this.$t('ffmpeg-profiles.table.video'), value: 'video' },
             { text: this.$t('ffmpeg-profiles.table.audio'), value: 'audio' },
-            { text: 'Actions', value: 'actions', sortable: false }
+            {
+                text: this.$t('ffmpeg-profiles.actions'),
+                value: 'actions',
+                sortable: false
+            }
         ];
     }
 
@@ -54,12 +59,20 @@ export default class FFmpegProfiles extends Vue {
     deleteRecord(record: any, recordName: any) {
         this.$swal
             .fire({
-                title: 'Are you sure?',
-                text: 'Delete "' + recordName + '" FFmpeg Profile?',
+                title: this.$t(
+                    'ffmpeg-profiles.delete-dialog-title'
+                ).toString(),
+                // text: this.$t(
+                //     'Delete "' + recordName + '" FFmpeg Profile?'
+                // ).toString(),
+                text: this.$t('ffmpeg-profiles.delete-dialog-text', {
+                    profileName: '"' + recordName + '"'
+                }).toString(),
                 icon: 'warning',
-                iconColor: '#4CAF50',
+                //iconColor: '#4CAF50',
                 showCancelButton: true,
-                confirmButtonText: 'Yes'
+                cancelButtonText: this.$t('ffmpeg-profiles.no').toString(),
+                confirmButtonText: this.$t('ffmpeg-profiles.yes').toString()
             })
             .then((result) => {
                 if (result.isConfirmed) {
@@ -68,15 +81,30 @@ export default class FFmpegProfiles extends Vue {
                     );
                     this.ffmpegProfiles.splice(index, 1);
                     ffmpegProfileApiService.deleteRecord(String(record));
-                    this.$swal.fire({
-                        html: '"' + recordName + '" FFmpeg Profile deleted.',
-                        timer: 2200
+                    const Toast = this.$swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.addEventListener(
+                                'mouseenter',
+                                this.$swal.stopTimer
+                            );
+                            toast.addEventListener(
+                                'mouseleave',
+                                this.$swal.resumeTimer
+                            );
+                        }
                     });
-                    this.$swal.fire(
-                        'Deleted!',
-                        '"' + recordName + '" FFmpeg Profile deleted.',
-                        'success'
-                    );
+
+                    Toast.fire({
+                        icon: 'success',
+                        title: this.$t(
+                            'ffmpeg-profiles.profile-deleted'
+                        ).toString()
+                    });
                 }
             });
     }

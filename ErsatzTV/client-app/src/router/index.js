@@ -3,8 +3,8 @@ import VueRouter from 'vue-router';
 import HomePage from '../views/HomePage.vue';
 import ChannelsPage from '../views/ChannelsPage.vue';
 import FFmpegProfilesPage from '../views/FFmpegProfilesPage.vue';
-import WatermarksPage from '../views/WatermarksPage.vue';
 import AddEditFFmpegProfilePage from '../views/AddEditFFmpegProfilePage.vue';
+import WatermarksPage from '../views/WatermarksPage.vue';
 import AddEditWatermarkPage from '../views/AddEditWatermarkPage';
 
 Vue.use(VueRouter);
